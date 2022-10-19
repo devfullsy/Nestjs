@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { EstiamGuard } from 'src/guards/estiamUsers.quard';
 import { IVehicle } from './vehicle.interface';
 import { VehicleDto } from './vehicles.dto';
 import { VehiclesService } from './vehicles.service';
@@ -28,6 +29,7 @@ export class VehiclesController {
   }
 
   @Post('/:type')
+  @UseGuards(EstiamGuard)
   @UsePipes(new ValidationPipe())
   createVehicleByType(
     @Param('type') vehicleType: string,
@@ -40,8 +42,8 @@ export class VehiclesController {
   deleteVehicleByTypeAndId(
     @Param('type') vehicleType: string,
     @Param('id') vehicleId: string,
-  ): any {
-    return this.vehicleService.getVehicleByTypeAndId(
+  ): String {
+    return this.vehicleService.deleteVehicleByTypeAndId(
       vehicleType,(+vehicleId)
     );
   }

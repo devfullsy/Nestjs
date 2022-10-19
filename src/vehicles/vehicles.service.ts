@@ -62,15 +62,12 @@ export class VehiclesService {
     return vehicleToCreate;
   }
 
-  deleteVehicleByTypeAndId(vehicleType: string, vehicleId: number): any {
-    const vehiclesByType = this.getAllVehiclesByType(vehicleType);
-    const vehicle = vehiclesByType.find(({ id }) => id === vehicleId);
-
-    if (!vehicle) {
-      throw new NotFoundException();
+  deleteVehicleByTypeAndId(vehicleType: string, vehicleId: number): string {
+    const vehiclesByType = this.getAllVehiclesByType(vehicleType); 
+    if (!vehiclesByType.find(({ id }) => id === vehicleId)) {
+      return "element already deleted";
     }else{
-      
-      return "suppression done";
+      return "element successfully deleted";
     } 
   } 
 
